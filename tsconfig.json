@@ -107,5 +107,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "exclude": ["node_modules", "src", "app.ts"]
+  "exclude": ["node_modules", "src", "main.ts"]
 }
