@@ -6,18 +6,19 @@
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint '**/*.ts'",
-    "start": "ts-node src/app.ts",
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "start": "ts-node src/main.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
     "rimraf": "rimraf dist",
     "copy": "cpx 'front/view/**/*' dist/public",
     "tsc": "tsc",
     "build": "run-s rimraf copy tsc",
-    "start:prod": "node dist/app.js"
+    "start:prod": "node dist/main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nestjs/platform-express": "^10.4.4",
     "@nestjs/sequelize": "^10.0.1",
     "@types/sequelize": "^4.28.20",
     "nunjucks": "^3.2.4",
