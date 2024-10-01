@@ -1,0 +1,13 @@
+# ソフトウェア本体なのでいらない
+# npm installでみんなnode_modulesの中身が揃う
+node_modules
+
+# emacs特有のチルダファイル
+**/*~
+
+# 成果物をここのディレクトリに入れる
+# npm run buildでみんなdistの中身が揃う
+dist
+
+# データベースの中身は共有する必要がない
+*.sqlite
