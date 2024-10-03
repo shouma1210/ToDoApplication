@@ -1,9 +1,15 @@
-import { Controller, Get, Param, Query, Post, Body,Delete, Put  } from "@nestjs/common";
+import { Controller, Get, Param, Render, Post, Body,Delete, Put  } from "@nestjs/common";
 import { AppService } from "./app.service";
 
 @Controller("todos")
 export class AppController {
   constructor(private readonly appService: AppService) {}
+  
+  @Get("/")
+  @Render("index.njk")
+  async renderIndex() {
+    return {};  
+  }
 
   @Get()
   async getTodos() {

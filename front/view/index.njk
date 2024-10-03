@@ -1,0 +1,35 @@
+{% extends "base.njk" %}
+{% block title %}ホーム画面{% endblock %}
+{% block script %}
+<script src=" " defer></script>
+<script sec=" " defer></script> <!-- main.tsなどを入れる -->
+{% endblock %}
+{% block content %}
+<form class="text-end mb-3" method="post" action="post-category">
+  <input type="submit" class="btn btn-primary" value="カテゴリを追加する">
+</form>
+<div class="todopost-form">
+  <div class="pb-2 border-bottom mb-3">
+  <form method="post" action="http://localhost:3000/todos">
+    <textarea name="content" class="form-control" id="content" rows="1" placeholder="追加したいToDoの内容" required></textarea>
+    <textarea name="content" class="form-control" id="content" rows="1" placeholder="追加したいToDoの日付" required></textarea>
+    <!--カテゴリ選択-->
+    <p id="warning" class="text-danger"></p>
+    <div cflass="mt-2 me-2 text-end">
+      <input type="submit" id="submitButton" class="btn btn-primary rounded-pill" value="ToDoを追加する">
+    </div>
+  </form>
+  </div>
+</div>
+<div id="todolist">
+  <!--日付ごとに表示-->
+  {% for post in posts %}
+  <div class="border border-radius">
+    <p><!--チェックボックスの表示-->{{post.Todo.description }} <!--カテゴリによって文字の色を変化--></p>
+  </div>
+  {% endfor %}
+  <!--追加したTodoの削除-->
+  <!--追加したTodoの更新-->
+</div>
+{% endblock %}
+
