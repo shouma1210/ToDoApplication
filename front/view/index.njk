@@ -11,9 +11,15 @@
 <div class="todopost-form">
   <div class="pb-2 border-bottom mb-3">
   <form method="post" action="http://localhost:3000/todos">
-    <textarea name="content" class="form-control" id="content" rows="1" placeholder="追加したいToDoの内容" required></textarea>
-    <textarea name="content" class="form-control" id="content" rows="1" placeholder="追加したいToDoの日付" required></textarea>
+    <textarea name="description" class="form-control" id="decription" rows="1" placeholder="追加したいToDoの内容" required></textarea>
+    <textarea name="date" class="form-control" id="date" rows="1" placeholder="追加したいToDoの日付" required></textarea>
     <!--カテゴリ選択-->
+    <select name="categoryId" class="form-control" id="categoryId" required>
+    <option value="" disabled selected>カテゴリを選択</option>
+    <option value="1">仕事</option>
+    <option value="2">勉強</option>
+    <!-- 他のカテゴリも追加 -->
+  </select>
     <p id="warning" class="text-danger"></p>
     <div cflass="mt-2 me-2 text-end">
       <input type="submit" id="submitButton" class="btn btn-primary rounded-pill" value="ToDoを追加する">
@@ -23,13 +29,14 @@
 </div>
 <div id="todolist">
   <!--日付ごとに表示-->
-  {% for post in posts %}
-  <div class="border border-radius">
-    <p><!--チェックボックスの表示-->{{post.Todo.description }} <!--カテゴリによって文字の色を変化--></p>
-  </div>
-  {% endfor %}
-  <!--追加したTodoの削除-->
-  <!--追加したTodoの更新-->
+  {% if posts and posts.length > 0 %}
+    {% for post in posts %}
+    <div class="border border-radius">
+      <p>{{ post.description }} <!--カテゴリによって文字の色を変化--></p>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p>ToDoがありません。</p>
+  {% endif %}
 </div>
 {% endblock %}
-
