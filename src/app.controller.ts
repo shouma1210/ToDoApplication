@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Render, Post, Body,Delete, Put  } from "@nestjs/common";
+import { Controller, Get, Param, Render, Post, Body,Delete, Put, Res } from "@nestjs/common";
 import { AppService } from "./app.service";
 
 @Controller("todos")
@@ -8,7 +8,8 @@ export class AppController {
   @Get("/")
   @Render("index.njk")
   async renderIndex() {
-    return {};  
+    const todos = await this.appService.readTodos(); 
+    return { posts: todos };  
   }
 
   @Get()
@@ -34,9 +35,10 @@ export class AppController {
     @Body("description") description: string,
     @Body("date") date:number,
     @Body("categoryId") categoryId: number,
+    @Res() res: any,
     ){
       await this.appService.createTodo(description, date, categoryId);
-      return { message: "Todo created successfully"};
+      return res.redirect("/todos");
     }
     
 
