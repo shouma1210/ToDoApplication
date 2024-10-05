@@ -12,7 +12,6 @@
   <div class="pb-2 border-bottom mb-3">
   <form method="post" action="http://localhost:3000/todos">
     <textarea name="description" class="form-control" id="decription" rows="1" placeholder="追加したいToDoの内容" required></textarea>
-    <textarea name="date" class="form-control" id="date" rows="1" placeholder="追加したいToDoの日付" required></textarea>
     <select name="categoryId" class="form-control" id="categoryId" required>
     <option value="" disabled selected>カテゴリを選択</option>
     {% for category in categories %}
@@ -27,7 +26,6 @@
   </div>
 </div>
 <div id="todolist">
-  <!--日付ごとに表示-->
   {% if posts and posts.length > 0 %}
     {% for post in posts %}
     <div class="border border-radius mb-2 p-2 d-flex justify-content-between align-items-center">

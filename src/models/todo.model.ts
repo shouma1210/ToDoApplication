@@ -10,9 +10,6 @@ export class Todo extends Model {
 
   @Column(DataType.STRING)
   description?: string;
-  
-  @Column(DataType.INTEGER)
-  date?: number;
 
   @ForeignKey(() => Category)
   @Column(DataType.INTEGER)

@@ -16,11 +16,10 @@ export class AppController {
   @Post()
   async createTodo(
     @Body("description") description: string,
-    @Body("date") date:number,
     @Body("categoryId") categoryId: number,
     @Res() res: any,
     ){
-      await this.appService.createTodo(description, date, categoryId);
+      await this.appService.createTodo(description, categoryId);
       return res.redirect("/todos");
     }
     
@@ -37,11 +36,10 @@ export class AppController {
     async updateTodo(
       @Param("id") id: string,
       @Body("description") description:string,
-      @Body("date") date: number,
       @Body("categoryId") categoryId: number,
       @Res() res: any,
     ) {
-      await this.appService.updateTodo(parseInt(id),description,date,categoryId);
+      await this.appService.updateTodo(parseInt(id),description,categoryId);
       return res.redirect("/todos");
     }
     

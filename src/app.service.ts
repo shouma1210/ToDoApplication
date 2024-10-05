@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Todo } from "./models/todo.model";
 import { Category } from "./models/category.model";
-import { Op } from "sequelize";
+
 
 @Injectable()
 export class AppService {
@@ -18,27 +18,18 @@ export class AppService {
     return this.todoModel.findAll({ include: [Category] });
   }
 
-  async readTodoByDate(date: number): Promise<Todo[]> {
-    const todos = await this.todoModel.findAll({
-      where: {
-       date: date, 
-      },
-      include: [Category], 
-    });
-    return todos; 
-  }
 
-  async createTodo(description: string, date: number, categoryId: number): Promise<void> {
-    await this.todoModel.create({ description, date, categoryId });
+  async createTodo(description: string,categoryId: number): Promise<void> {
+    await this.todoModel.create({ description, categoryId });
   }
 
   async deleteTodo(id: number): Promise<void> {
     await this.todoModel.destroy({ where: { id } });
   }
 
-  async updateTodo(id: number, description: string, date: number, categoryId: number): Promise<void> {
+  async updateTodo(id: number, description: string, categoryId: number): Promise<void> {
     await this.todoModel.update(
-      { description, date, categoryId },
+      { description, categoryId },
       { where: { id } }
     );
   }
