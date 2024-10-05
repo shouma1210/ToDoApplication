@@ -28,14 +28,6 @@ export class AppService {
     return todos; 
   }
 
-  async readTodo(id: number): Promise<Todo> {
-    const todo = await this.todoModel.findByPk(id, { include: [Category] });
-    if (!todo) {
-      throw new Error("Todo not found"); 
-    }
-    return todo; 
-  }
-
   async createTodo(description: string, date: number, categoryId: number): Promise<void> {
     await this.todoModel.create({ description, date, categoryId });
   }
@@ -51,12 +43,8 @@ export class AppService {
     );
   }
 
-  async readCategory(id: number): Promise<Category | null> {
-    const category = await this.categoryModel.findByPk(id);
-    if (!category) {
-      throw new Error("Category not found"); 
-    }
-    return category; 
+  async readCategories() {
+    return await this.categoryModel.findAll();  
   }
 
   async createCategory(name: string): Promise<void> {
