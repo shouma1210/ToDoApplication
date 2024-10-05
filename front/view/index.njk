@@ -5,7 +5,7 @@
 <script sec=" " defer></script> <!-- main.tsなどを入れる -->
 {% endblock %}
 {% block content %}
-<form class="text-end mb-3" method="post" action="post-category">
+<form class="text-end mb-3" method="get" action="/todos/categories">
   <input type="submit" class="btn btn-primary" value="カテゴリを追加する">
 </form>
 <div class="todopost-form">
@@ -13,15 +13,14 @@
   <form method="post" action="http://localhost:3000/todos">
     <textarea name="description" class="form-control" id="decription" rows="1" placeholder="追加したいToDoの内容" required></textarea>
     <textarea name="date" class="form-control" id="date" rows="1" placeholder="追加したいToDoの日付" required></textarea>
-    <!--カテゴリ選択-->
     <select name="categoryId" class="form-control" id="categoryId" required>
     <option value="" disabled selected>カテゴリを選択</option>
-    <option value="1">仕事</option>
-    <option value="2">勉強</option>
-    <!-- 他のカテゴリも追加 -->
+    {% for category in categories %}
+    <option value="{{ category.id }}">{{ category.name }}</option>
+    {% endfor %}
   </select>
     <p id="warning" class="text-danger"></p>
-    <div cflass="mt-2 me-2 text-end">
+    <div class="mt-2 me-2 text-end">
       <input type="submit" id="submitButton" class="btn btn-primary rounded-pill" value="ToDoを追加する">
     </div>
   </form>
@@ -31,8 +30,19 @@
   <!--日付ごとに表示-->
   {% if posts and posts.length > 0 %}
     {% for post in posts %}
-    <div class="border border-radius">
-      <p>{{ post.description }} <!--カテゴリによって文字の色を変化--></p>
+    <div class="border border-radius mb-2 p-2 d-flex justify-content-between align-items-center">
+    <input type="checkbox" class="me-2">
+    <p class="mb-0">{{ post.description }}</p>
+    <div>
+      <form class="d-inline me-2" method="post" action="/todos/{{ post.id }}">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="submit" class="btn btn-warning btn-sm" value="更新">
+      </form>
+      <form class="d-inline" method="post" action="/todos/{{ post.id }}">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" class="btn btn-danger btn-sm" value="削除">
+      </form>
+    </div>
     </div>
     {% endfor %}
   {% else %}

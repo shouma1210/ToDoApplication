@@ -9,26 +9,9 @@ export class AppController {
   @Render("index.njk")
   async renderIndex() {
     const todos = await this.appService.readTodos(); 
-    return { posts: todos };  
-  }
-
-  @Get()
-  async getTodos() {
-    const todos = await this.appService.readTodos();
-    return todos;
-  }
-
-  @Get("date/:date")
-  async getTodoByDate(@Param("date") date: string) {
-    const todobydate = await this.appService.readTodoByDate(parseInt(date));
-    return todobydate;
-  }
-
-  @Get(":id")
-  async getTodoById(@Param("id") id: string) {
-    const todo = await this.appService.readTodo(parseInt(id));
-    return todo;
-  }
+    const categories = await this.appService.readCategories();
+  return { posts: todos, categories }; 
+  } 
 
   @Post()
   async createTodo(
@@ -43,9 +26,11 @@ export class AppController {
     
 
     @Delete(":id")
-    async deleteTodo(@Param("id") id: string) {
+    async deleteTodo(
+      @Param("id") id: string,
+      @Res() res: any,) {
       await this.appService.deleteTodo(parseInt(id));
-      return { message: "Todo deleted successfully" };
+      return res.redirect("/todos");
     }
 
     @Put(":id")
@@ -54,21 +39,24 @@ export class AppController {
       @Body("description") description:string,
       @Body("date") date: number,
       @Body("categoryId") categoryId: number,
+      @Res() res: any,
     ) {
       await this.appService.updateTodo(parseInt(id),description,date,categoryId);
-      return { message: "Todo updated successfully" };
+      return res.redirect("/todos");
     }
     
-    @Get("categories/:id")
-    async getCategorybyId(@Param("id") id: string) {
-      const category = await this.appService.readCategory(parseInt(id));
-      return category;
+    @Get("categories")
+    @Render("category-form.njk")
+    async renderCategoryForm() {
+      return {};
     }
   
     @Post("categories")
-    async createCategory(@Body("name") name: string){
+    async createCategory(
+      @Body("name") name: string,
+      @Res() res: any,){
         await this.appService.createCategory(name);
-        return { message: "Category created successfully"};
+        return res.redirect("/todos/categories");
       }
   
     @Delete("categories/:id")
@@ -85,5 +73,4 @@ export class AppController {
       await this.appService.updateCategory(parseInt(id),name);
       return { message: "Todo updated successfully" };
     }
-
 }
