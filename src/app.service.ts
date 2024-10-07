@@ -18,6 +18,9 @@ export class AppService {
     return this.todoModel.findAll({ include: [Category] });
   }
 
+  async readTodoById(id: number): Promise<Todo | null> {
+    return await this.todoModel.findByPk(id);
+  }
 
   async createTodo(description: string,categoryId: number): Promise<void> {
     await this.todoModel.create({ description, categoryId });

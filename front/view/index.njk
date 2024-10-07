@@ -1,8 +1,6 @@
 {% extends "base.njk" %}
 {% block title %}ホーム画面{% endblock %}
 {% block script %}
-<script src=" " defer></script>
-<script sec=" " defer></script> <!-- main.tsなどを入れる -->
 {% endblock %}
 {% block content %}
 <form class="text-end mb-3" method="get" action="/todos/categories">
@@ -20,7 +18,7 @@
   </select>
     <p id="warning" class="text-danger"></p>
     <div class="mt-2 me-2 text-end">
-      <input type="submit" id="submitButton" class="btn btn-primary rounded-pill" value="ToDoを追加する">
+      <input type="submit" id="submitButton" class="btn btn-primary " value="ToDoを追加する">
     </div>
   </form>
   </div>
@@ -28,16 +26,14 @@
 <div id="todolist">
   {% if posts and posts.length > 0 %}
     {% for post in posts %}
-    <div class="border border-radius mb-2 p-2 d-flex justify-content-between align-items-center">
+    <div class="border border-radius mb-2 m-2 p-2 d-flex justify-content-between align-items-center">
     <input type="checkbox" class="me-2">
     <p class="mb-0">{{ post.description }}</p>
     <div>
-      <form class="d-inline me-2" method="post" action="/todos/{{ post.id }}">
-        <input type="hidden" name="_method" value="PUT">
+      <form class="d-inline me-2" method="get" action="/todos/{{ post.id }}/put">
         <input type="submit" class="btn btn-warning btn-sm" value="更新">
       </form>
-      <form class="d-inline" method="post" action="/todos/{{ post.id }}">
-        <input type="hidden" name="_method" value="DELETE">
+      <form class="d-inline" method="post" action="/todos/{{ post.id }}/delete">
         <input type="submit" class="btn btn-danger btn-sm" value="削除">
       </form>
     </div>

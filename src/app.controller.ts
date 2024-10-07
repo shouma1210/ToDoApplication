@@ -24,7 +24,7 @@ export class AppController {
     }
     
 
-    @Delete(":id")
+    @Post(":id/delete")
     async deleteTodo(
       @Param("id") id: string,
       @Res() res: any,) {
@@ -32,7 +32,15 @@ export class AppController {
       return res.redirect("/todos");
     }
 
-    @Put(":id")
+    @Get(":id/put")
+    @Render("update.njk")
+    async renderUpdateTodoForm(@Param("id") id: string) {
+      const todo = await this.appService.readTodoById(parseInt(id));
+      const categories = await this.appService.readCategories(); 
+      return { todo, categories };
+    }
+
+    @Post(":id/put")
     async updateTodo(
       @Param("id") id: string,
       @Body("description") description:string,
@@ -57,18 +65,4 @@ export class AppController {
         return res.redirect("/todos/categories");
       }
   
-    @Delete("categories/:id")
-    async deleteCategory(@Param("id") id: string) {
-      await this.appService.deleteCategory(parseInt(id));
-      return { message: "Category deleted successfully" };
-    }
-  
-    @Put("categories/:id")
-    async updateCategory(
-      @Param("id") id: string,
-      @Body("description") name:string,
-    ) {
-      await this.appService.updateCategory(parseInt(id),name);
-      return { message: "Todo updated successfully" };
-    }
 }

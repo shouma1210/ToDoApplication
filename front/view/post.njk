@@ -1,0 +1,23 @@
+{% extends "base.njk" %}
+{% block title %}更新画面{% endblock %}
+{% block script %}
+{% endblock %}
+{% block content %}
+<div class="todoupdate-form">
+  <div class="pb-2 border-bottom mb-3">
+  <form method="post" action="/todos/{{ post.id }}/put">
+    <textarea name="description" class="form-control" id="decription" rows="1" placeholder="追加したいToDoの内容" required></textarea>
+    <select name="categoryId" class="form-control" id="categoryId" required>
+    <option value="" disabled selected>カテゴリを選択</option>
+    {% for category in categories %}
+    <option value="{{ category.id }}">{{ category.name }}</option>
+    {% endfor %}
+  </select>
+    <p id="warning" class="text-danger"></p>
+    <div class="mt-2 me-2 text-end">
+      <input type="submit" id="submitButton" class="btn btn-primary " value="ToDoを更新する">
+    </div>
+  </form>
+  </div>
+</div>
+{% endblock %}
